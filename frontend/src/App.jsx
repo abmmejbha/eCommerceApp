@@ -32,7 +32,7 @@ function App() {
   }
 
   const updateUser = async (id) => {
-    console.log("Requesting to:", `${API}/users/${editUser._id}`);
+    if(!editUser) return
     await axios.put(`${API}/users/${editUser._id}`, { name, email })
 
     // কাজ শেষ, এবার সব রিসেট করো
@@ -68,7 +68,7 @@ function App() {
       <input
         placeholder="Search users..."
         value={search}
-        onChange={(e) => (e.target.value)}
+        onChange={(e) => setSearch(e.target.value)}
         style={{ marginBottom: '1rem', width: '100%', padding: '8px' }}
       />
 
@@ -112,7 +112,7 @@ function App() {
             borderBottom: '1px solid #ccc'
           }}>
             <span>{user.name} — {user.email}</span>
-            <button onClick={() => handleEditClick(user._id)}>✏️</button>
+            <button onClick={() => handleEditClick(user)}>✏️</button>
             <button onClick={() => deleteUser(user._id)}>❌</button>
           </div>
         ))

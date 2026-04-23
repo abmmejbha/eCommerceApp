@@ -36,6 +36,24 @@ app.post('/users', async (req, res) => {
   res.json({ message: 'User created!', user });
 });
 
+// Update User
+// app.put('/users/:id', async (req, res) => {
+//   const user = new User(req.body)
+//   await User.findByIdAndUpdate(req.params.id, req.body)
+//   res.json({message: "User Updated! "})
+// })
+app.put('/users/:id', async (req, res) => {
+  try {
+    // ১. id এবং ২. নতুন ডেটা (req.body) পাঠাতে হবে
+    // { new: true } দিলে আপডেট হওয়ার পর নতুন ডেটাটি রিটার্ন করে
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {new: true})
+    res.json({message: "User Updated! ", user: updatedUser})
+  }
+  catch(err) {
+    res.status(500).json({message: "Error Updating user", erro: err})
+  }
+})
+
 // DELETE — user মুছো
 app.delete('/users/:id', async (req, res) => {
   await User.findByIdAndDelete(req.params.id);

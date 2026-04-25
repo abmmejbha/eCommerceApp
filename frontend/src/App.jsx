@@ -62,7 +62,8 @@ function App() {
   };
 
   return (
-    <div style={{ padding: '2rem', maxWidth: '500px', margin: '0 auto' }}>
+      <div className="min-h-screen bg-slate-950 text-slate-100 font-sans px-4 py-10">
+  <div className="max-w-2xl mx-auto"> 
       <h1>User Management</h1>
 
       <input
@@ -117,6 +118,7 @@ function App() {
           </div>
         ))
       )}
+              </div>
     </div>
   )
 }

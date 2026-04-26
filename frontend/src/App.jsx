@@ -26,6 +26,16 @@ function App() {
   const [deleteId, setDeleteId] = useState(null)
   const [showModal, setShowModal] = useState(false)
   const [toast, setToast] = useState(null)
+  const [errors, setErrors] = useState({})
+
+  const validate = () => {
+    const newErrors = {}
+    if(!name) newErrors.name = 'Name is required'
+    if(!name) newErrors.email = 'Email is required'
+    else if (!email.includes('@')) newErrors.email = 'Valid email is required'
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
 
 
   const showToast = (message, type = 'success') => {
@@ -48,7 +58,7 @@ function App() {
 
   // নতুন user add করো
   const addUser = async () => {
-    if (!name || !email) return // নাম বা ইমেইল খালি থাকলে থামিয়ে দেয়
+    if (!validate()) return // নাম বা ইমেইল খালি থাকলে থামিয়ে দেয়
 
     try {
       await axios.post(`${API}/users`, { name, email }) // ব্যাকএন্ডের POST রাউটে ডেটা পাঠায়
@@ -64,7 +74,7 @@ function App() {
 
   //update user function 
   const updateUser = async () => {
-    if (!editUser || !name || !email) return
+    if (!editUser || !validate()) return
 
     try {
       await axios.put(`${API}/users/${editUser._id}`, { name, email })
@@ -159,6 +169,7 @@ function App() {
               onChange={(e) => setName(e.target.value)}
               className="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition"
             />
+            {errors.name && <p className="text-rose-400 text-xs mt-1">{errors.name}</p>}
             <input
               onKeyDown={(e) => e.key === 'Enter' && (editUser ? updateUser() : addUser())}
               placeholder="Email address"
@@ -166,6 +177,7 @@ function App() {
               onChange={(e) => setEmail(e.target.value)}
               className="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition"
             />
+            {errors.email && <p className="text-rose-400 text-xs mt-1">{errors.email}</p>}
           </div>
           <div className="flex gap-2 mt-3">
             {editUser ? (

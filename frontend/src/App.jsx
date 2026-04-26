@@ -142,7 +142,7 @@ function App() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full bg-slate-900 border border-slate-700 rounded-xl pl-10 pr-4 py-3 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition"
-          />
+            />
         </div>
 
         {/* Add User Form */}
@@ -153,12 +153,14 @@ function App() {
           </h2>
           <div className="flex flex-col sm:flex-row gap-3">
             <input
+              onKeyDown={(e) => e.key === 'Enter' && (editUser ? updateUser() : addUser())}
               placeholder="Full name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition"
             />
             <input
+              onKeyDown={(e) => e.key === 'Enter' && (editUser ? updateUser() : addUser())}
               placeholder="Email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -202,13 +204,13 @@ function App() {
               <p className="text-slate-400 text-sm">Loading users...</p>
             </div>
           ) : filtered.length === 0 ? (
-  <div className="text-center py-16 bg-slate-900 border border-slate-800 rounded-2xl">
-    <svg className="w-16 h-16 mx-auto mb-4 text-slate-700" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-    </svg>
-    <p className="text-slate-400 text-sm font-medium">কোনো user নেই</p>
-    <p className="text-slate-600 text-xs mt-1">উপরে নাম আর ইমেইল দিয়ে নতুন user যোগ করো</p>
-  </div>
+            <div className="text-center py-16 bg-slate-900 border border-slate-800 rounded-2xl">
+              <svg className="w-16 h-16 mx-auto mb-4 text-slate-700" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+              </svg>
+              <p className="text-slate-400 text-sm font-medium">কোনো user নেই</p>
+              <p className="text-slate-600 text-xs mt-1">উপরে নাম আর ইমেইল দিয়ে নতুন user যোগ করো</p>
+            </div>
           ) : (
             filtered.map((user) => (
               <div

@@ -25,6 +25,14 @@ function App() {
   const [editUser, setEditUser] = useState(null)
   const [deleteId, setDeleteId] = useState(null)
   const [showModal, setShowModal] = useState(false)
+  const [toast, setToast] = useState(null)
+
+
+ const showToast = (message, type ='success') => {
+      setToast({message, type})
+      setTimeout(() => setToast(null), 3000)
+    }
+
 
   // সব user load করো
   const fetchUsers = async () => {
@@ -47,6 +55,8 @@ function App() {
       setName('');
       setEmail('') // ইনপুট বক্স খালি করে দেয়
       fetchUsers() // নতুন ইউজারসহ লিস্টটি আবার আপডেট করে
+      showToast('User added successfully!')
+
     } catch (err) {
       console.error("Add user failed: ", err)
     }
@@ -63,6 +73,7 @@ function App() {
       setEditUser(null)
       setName('')
       setEmail('')
+      showToast('User Updated sucessfully!')
 
       await fetchUsers();// লিস্ট আপডেট 
 
@@ -75,13 +86,14 @@ function App() {
     }
   }
     // user delete 
-    const deleteUser = async () => {
+   const deleteUser = async () => {
   try {
-    const res = await axios.delete(`${API}/users/${deleteId}`)
-    console.log('response:', res)
+    await axios.delete(`${API}/users/${deleteId}`)
     fetchUsers()
     setShowModal(false)
     setDeleteId(null)
+    showToast('User deleted successfully!')
+
   } catch (err) {
     console.log('error:', err.response)
   }
@@ -93,6 +105,7 @@ function App() {
       setShowModal(true)
     }
 
+   
 
     // search দিয়ে filtering
     const filtered = users.filter((user) =>
@@ -244,6 +257,13 @@ function App() {
         </button>
       </div>
     </div>
+  </div>
+)}
+
+{toast && (
+  <div className={`fixed bottom-6 right-6 z-50 px-5 py-3 rounded-xl shadow-lg text-sm font-medium text-white transition-all
+    ${toast.type === 'success' ? 'bg-emerald-600' : 'bg-rose-600'}`}>
+    {toast.message}
   </div>
 )}
 

@@ -3,7 +3,6 @@ import axios from 'axios'
 
 const API = 'https://user-management-backend-r07v.onrender.com'
 
-
 function getInitials(name) {
   if(!name) return '?'
   return name.split(' ').map((n) => n[0]).join('').toUpperCase().slice(0, 2)
@@ -24,6 +23,8 @@ function App() {
   const [search, setSearch] = useState("")
   const [loading, setLoading] = useState(true)
   const [editUser, setEditUser] = useState(null)
+  const [deleteId, setDeleteId] = useState(null)
+  const [showModal, setShowModal] = useState(false)
 
   // সব user load করো
   const fetchUsers = async () => {
@@ -73,10 +74,23 @@ function App() {
       setLoading(false)
     }
   }
-    // user delete করো
-    const deleteUser = async (id) => {
-      await axios.delete(`${API}/users/${id}`) // নির্দিষ্ট ID সহ DELETE রিকোয়েস্ট পাঠায়
-      fetchUsers() // ডিলিট হওয়ার পর ফ্রন্টএন্ডে লিস্ট আপডেট করে
+    // user delete 
+    const deleteUser = async () => {
+  try {
+    const res = await axios.delete(`${API}/users/${deleteId}`)
+    console.log('response:', res)
+    fetchUsers()
+    setShowModal(false)
+    setDeleteId(null)
+  } catch (err) {
+    console.log('error:', err.response)
+  }
+}
+    const handleDeleteClick = (id) => {
+      console.log('id:', id)
+      console.log('type:', typeof id)
+      setDeleteId(id)
+      setShowModal(true)
     }
 
 
@@ -202,13 +216,37 @@ function App() {
                       </svg>
                     </button>
                     <button
-                      onClick={() => deleteUser(user._id)}
+                      onClick={() => handleDeleteClick(user._id)}
                       className="p-2 rounded-lg hover:bg-slate-700 text-slate-400 hover:text-rose-400 transition"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2" />
                       </svg>
                     </button>
+
+                    {showModal && (
+  <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+    <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6 w-full max-w-sm mx-4">
+      <h3 className="text-lg font-semibold text-white mb-2">Delete User?</h3>
+      <p className="text-slate-400 text-sm mb-6">এই user কে delete করলে আর ফিরিয়ে আনা যাবে না।</p>
+      <div className="flex gap-3">
+        <button
+          onClick={deleteUser}
+          className="flex-1 bg-rose-600 hover:bg-rose-500 text-white text-sm font-semibold py-2.5 rounded-xl transition"
+        >
+          হ্যাঁ, Delete করো
+        </button>
+        <button
+          onClick={() => { setShowModal(false); setDeleteId(null) }}
+          className="flex-1 bg-slate-700 hover:bg-slate-600 text-slate-300 text-sm font-medium py-2.5 rounded-xl transition"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
                   </div>
                 </div>
               ))

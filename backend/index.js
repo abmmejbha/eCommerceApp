@@ -17,6 +17,9 @@ mongoose.connect(process.env.MONGO_URI)
 const userSchema = new mongoose.Schema({
   name: String,
   email: String,
+  phone: String,
+  website: String,
+  city: String
 });
 
 const User = mongoose.model('User', userSchema);
@@ -36,12 +39,7 @@ app.post('/users', async (req, res) => {
   res.json({ message: 'User created!', user });
 });
 
-// Update User
-// app.put('/users/:id', async (req, res) => {
-//   const user = new User(req.body)
-//   await User.findByIdAndUpdate(req.params.id, req.body)
-//   res.json({message: "User Updated! "})
-// })
+
 app.put('/users/:id', async (req, res) => {
   try {
     // ১. id এবং ২. নতুন ডেটা (req.body) পাঠাতে হবে

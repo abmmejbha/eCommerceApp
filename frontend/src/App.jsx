@@ -20,6 +20,13 @@ export default function App() {
   const [showModal, setShowModal] = useState(false)
   const [toast, setToast] = useState(null)
   const [errors, setErrors] = useState({})
+  const [phone, setPhone] = useState('')
+  const [age, setAge] = useState('')
+  const [city, setCity] = useState('')
+  const [country, setCountry] = useState('')
+  const [gender, setGender] = useState('')
+  const [website, setWebsite] = useState('')
+
 
   const fetchUsers = async () => {
     const res = await axios.get(`${API}/users`)
@@ -48,9 +55,15 @@ export default function App() {
   const addUser = async () => {
     if (!validate()) return
     try {
-      await axios.post(`${API}/users`, { name, email })
+      await axios.post(`${API}/users`, { name, email, phone, age, city, country, gender, website })
       setName('')
       setEmail('')
+      setPhone('')
+      setAge('')
+      setCity('')
+      setCountry('')
+      setGender('')
+      setWebsite('')
       showToast('User added successfully!')
       fetchUsers()
     } catch (err) {
@@ -62,10 +75,16 @@ export default function App() {
   const updateUser = async () => {
     if (!editUser || !validate()) return
     try {
-      await axios.put(`${API}/users/${editUser._id}`, { name, email })
+      await axios.put(`${API}/users/${editUser._id}`, { name, email, phone, age, city, country, gender, website })
       setEditUser(null)
       setName('')
       setEmail('')
+      setPhone('')
+      setAge('')
+      setCity('')
+      setCountry('')
+      setGender('')
+      setWebsite('')
       showToast('User updated successfully!')
       fetchUsers()
     } catch (err) {
@@ -89,6 +108,12 @@ export default function App() {
     setEditUser(user)
     setName(user.name)
     setEmail(user.email)
+    setPhone(user.phone || '')
+    setAge(user.age)
+    setCity(user.city || '')
+    setCountry(user.country)
+    setGender(user.gender)
+    setWebsite(user.website || '')
   }
 
   const handleDeleteClick = (id) => {

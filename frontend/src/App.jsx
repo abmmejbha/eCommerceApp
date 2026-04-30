@@ -133,6 +133,10 @@ export default function App() {
         <UserForm
           name={name} setName={setName}
           email={email} setEmail={setEmail}
+          phone={phone} setPhone = {setPhone}
+          website={website} setWebsite={setWebsite}
+          city = {city} setCity = {setCity}
+          
           editUser={editUser} setEditUser={setEditUser}
           addUser={addUser} updateUser={updateUser}
           errors={errors}

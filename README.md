@@ -2,4 +2,9 @@
 
 
 project is live at this link: 
-https://abm-usermanagementapp.netlify.app/
+
+# Netlify
+https://abm-usermanagementapp.netlify.app/  
+
+# Vercel
+https://user-management-app-nu-six.vercel.app/

@@ -125,7 +125,7 @@ export default function App() {
     user.name.toLowerCase().includes(search.toLowerCase())
   )
 
-  return (
+  return 
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans px-4 py-10">
       <div className="max-w-2xl mx-auto">
         <Header userCount={users.length} />
@@ -136,7 +136,7 @@ export default function App() {
           phone={phone} setPhone = {setPhone}
           website={website} setWebsite={setWebsite}
           city = {city} setCity = {setCity}
-          
+
           editUser={editUser} setEditUser={setEditUser}
           addUser={addUser} updateUser={updateUser}
           errors={errors}

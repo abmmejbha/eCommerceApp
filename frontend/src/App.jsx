@@ -29,9 +29,15 @@ export default function App() {
 
 
   const fetchUsers = async () => {
-    const res = await axios.get(`${API}/users`)
-    setUsers(res.data)
-    setLoading(false)
+    try {
+      setLoading(false)
+      const res = await axios.get(`${API}/users`)
+      setUsers(res.data)
+    } catch (err) {
+      showToast("Data loading error!" , 'error')
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {

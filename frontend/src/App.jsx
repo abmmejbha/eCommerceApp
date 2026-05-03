@@ -34,7 +34,7 @@ export default function App() {
       const res = await axios.get(`${API}/users`)
       setUsers(res.data)
     } catch (err) {
-      showToast("Data loading error!" , 'error')
+      showToast("Data loading error!", 'error')
     } finally {
       setLoading(false)
     }
@@ -56,6 +56,15 @@ export default function App() {
     else if (!email.includes('@')) newErrors.email = 'Valid email is required'
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
+  }
+
+  const clearForm = () => {
+    setName(''); setEmail(''); setPhone(''); setAge('');
+    setCity('');
+    setCountry('');
+    setGender('');
+    setEditUser(null);
+    setErrors({});
   }
 
   const addUser = async () => {
@@ -139,10 +148,12 @@ export default function App() {
         <UserForm
           name={name} setName={setName}
           email={email} setEmail={setEmail}
-          phone={phone} setPhone = {setPhone}
+          phone={phone} setPhone={setPhone}
           website={website} setWebsite={setWebsite}
-          city = {city} setCity = {setCity}
-
+          city={city} setCity={setCity}
+          age={age} setAge={setAge}
+          country={country} setCountry={setCountry}
+          gender={gender} setGender={setGender}
           editUser={editUser} setEditUser={setEditUser}
           addUser={addUser} updateUser={updateUser}
           errors={errors}

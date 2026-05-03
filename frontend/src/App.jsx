@@ -6,6 +6,7 @@ import UserForm from './components/UserForm'
 import UserList from './components/UserList'
 import DeleteModal from './components/DeleteModal'
 import Toast from './components/Toast'
+import UserDetails from './components/UserDetails'
 
 const API = 'https://user-management-backend-r07v.onrender.com'
 
@@ -26,6 +27,7 @@ export default function App() {
   const [country, setCountry] = useState('')
   const [gender, setGender] = useState('')
   const [website, setWebsite] = useState('')
+  const [selectUser, setSelectUser] = useState(null)
 
 
   const fetchUsers = async () => {
@@ -37,6 +39,11 @@ export default function App() {
     } finally {
       setLoading(false)
     }
+  }
+
+
+  const handleViewClick = (user) => {
+    setSelectUser(user)
   }
 
   useEffect(() => {
@@ -153,6 +160,7 @@ export default function App() {
           loading={loading}
           handleEditClick={handleEditClick}
           handleDeleteClick={handleDeleteClick}
+          handleViewClick={handleViewClick}
         />
         <DeleteModal
           showModal={showModal}

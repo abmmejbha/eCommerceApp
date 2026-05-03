@@ -19,7 +19,10 @@ const userSchema = new mongoose.Schema({
   email: String,
   phone: String,
   website: String,
-  city: String
+  city: String,
+  age: Number,
+  country: String,
+  gender: String
 });
 
 const User = mongoose.model('User', userSchema);
@@ -34,9 +37,14 @@ app.get('/users', async (req, res) => {
 
 // POST — নতুন user
 app.post('/users', async (req, res) => {
-  const user = new User(req.body);
-  await user.save();
-  res.json({ message: 'User created!', user });
+  try{
+    const {name, email, phone, website, city, age, country, gender} = req.body
+    const user = new User({name, email, phone, website, city, age, country, gender})
+    await user.save()
+    res.json({message: 'User created', user})
+  } catch (err) {
+    res.status(500).json({message: "Error creating user", error:err})
+  }
 });
 
 
@@ -48,7 +56,7 @@ app.put('/users/:id', async (req, res) => {
     res.json({message: "User Updated! ", user: updatedUser})
   }
   catch(err) {
-    res.status(500).json({message: "Error Updating user", erro: err})
+    res.status(500).json({message: "Error Updating user", error: err})
   }
 })
 
@@ -57,6 +65,7 @@ app.delete('/users/:id', async (req, res) => {
   await User.findByIdAndDelete(req.params.id);
   res.json({ message: 'User deleted!' });
 });
+
 
 // ──────────────────────────────────────────
 

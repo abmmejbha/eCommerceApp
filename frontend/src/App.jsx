@@ -27,7 +27,7 @@ export default function App() {
   const [country, setCountry] = useState('')
   const [gender, setGender] = useState('')
   const [website, setWebsite] = useState('')
-  const [selectUser, setSelectUser] = useState(null)
+  const [selectedUser, setSelectedUser] = useState(null)
 
 
   const fetchUsers = async () => {
@@ -43,7 +43,7 @@ export default function App() {
 
 
   const handleViewClick = (user) => {
-    setSelectUser(user)
+    setSelectedUser(user)
   }
 
   useEffect(() => {
@@ -129,7 +129,6 @@ export default function App() {
 
   // filtering using useMemo
   const filtered = useMemo(() => {
-    console.log("Filtering users...");
     return users.filter((user) => 
       user.name.toLowerCase().includes(search.toLowerCase())
     );
@@ -169,6 +168,12 @@ export default function App() {
           deleteUser={deleteUser}
         />
         <Toast toast={toast} />
+
+        <UserDetails
+          user={selectedUser}
+          onClose={ () =>  setSelectedUser(null)}
+        />
+
       </div>
     </div>
   )

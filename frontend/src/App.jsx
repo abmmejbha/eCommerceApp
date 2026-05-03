@@ -120,18 +120,15 @@ export default function App() {
     setShowModal(true)
   }
 
-  const filtered = users.filter((user) =>
-    user.name.toLowerCase().includes(search.toLowerCase())
-  )
-
-  // using useMemo
-  const filtered = useMemeo(() => {
-    console.log("Filtering usuers...");
+  // filtering using useMemo
+  const filtered = useMemo(() => {
+    console.log("Filtering users...");
     return users.filter((user) => 
       user.name.toLowerCase().includes(search.toLowerCase())
     );
   },[users, search])
 
+  
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans px-4 py-10">
       <div className="max-w-2xl mx-auto">

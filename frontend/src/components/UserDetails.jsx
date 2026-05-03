@@ -19,7 +19,7 @@ export default function UserDetails({ user, onClose }) {
                 </div>
 
                 {/* Details */}
-                <div className="space-y-3">
+                <div className="space-y-3 max-h-[70vh] overflow-y-auto pr-2 custom-scrollbar">
                     <div>
                         <p className="text-xs text-slate-500 uppercase tracking-widest mb-1">Name</p>
                         <p className="text-sm text-slate-100 font-medium">{user.name || '—'}</p>

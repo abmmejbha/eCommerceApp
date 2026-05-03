@@ -30,7 +30,7 @@ export default function App() {
 
   const fetchUsers = async () => {
     try {
-      setLoading(false)
+      setLoading(true)
       const res = await axios.get(`${API}/users`)
       setUsers(res.data)
     } catch (err) {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import axios from 'axios'
 import Header from './components/Header'
 import SearchBar from './components/SearchBar'
@@ -30,7 +30,6 @@ export default function App() {
 
   const fetchUsers = async () => {
     try {
-      setLoading(true)
       const res = await axios.get(`${API}/users`)
       setUsers(res.data)
     } catch (err) {
@@ -71,14 +70,7 @@ export default function App() {
     if (!validate()) return
     try {
       await axios.post(`${API}/users`, { name, email, phone, age, city, country, gender, website })
-      setName('')
-      setEmail('')
-      setPhone('')
-      setAge('')
-      setCity('')
-      setCountry('')
-      setGender('')
-      setWebsite('')
+      clearForm()
       showToast('User added successfully!')
       fetchUsers()
     } catch (err) {
@@ -91,15 +83,7 @@ export default function App() {
     if (!editUser || !validate()) return
     try {
       await axios.put(`${API}/users/${editUser._id}`, { name, email, phone, age, city, country, gender, website })
-      setEditUser(null)
-      setName('')
-      setEmail('')
-      setPhone('')
-      setAge('')
-      setCity('')
-      setCountry('')
-      setGender('')
-      setWebsite('')
+      clearForm()
       showToast('User updated successfully!')
       fetchUsers()
     } catch (err) {
@@ -139,6 +123,14 @@ export default function App() {
   const filtered = users.filter((user) =>
     user.name.toLowerCase().includes(search.toLowerCase())
   )
+
+  // using useMemo
+  const filtered = useMemeo(() => {
+    console.log("Filtering usuers...");
+    return users.filter((user) => 
+      user.name.toLowerCase().includes(search.toLowerCase())
+    );
+  },[users, search])
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans px-4 py-10">

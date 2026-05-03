@@ -2,22 +2,15 @@ export default function UserForm({
   name, setName,
   email, setEmail,
   phone, setPhone,
-  website, setWebsite,
+  age, setAge,
+  country, setCountry,
+  gender, setGender,
   city, setCity,
+  website, setWebsite,
   editUser, setEditUser,
   addUser, updateUser,
-  errors,
+  errors, clearForm
 }) {
-  
-  // রিসেট ফাংশন (বারবার না লিখে এক জায়গায় করা ভালো)
-  const handleCancel = () => {
-    setEditUser(null);
-    setName("");
-    setEmail("");
-    setPhone("");
-    setWebsite("");
-    setCity("");
-  };
 
   const onEnterKey = (e) => {
     if (e.key === "Enter") {
@@ -34,6 +27,8 @@ export default function UserForm({
       {/* ইনপুট ফিল্ডগুলোর গ্রিড */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         <div className="flex-1">
+
+          {/* Name input field  */}
           <input
             onKeyDown={onEnterKey}
             placeholder="Full name"
@@ -44,6 +39,7 @@ export default function UserForm({
           {errors.name && <p className="text-rose-400 text-xs mt-1">{errors.name}</p>}
         </div>
 
+        {/* Email Field */}
         <div className="flex-1">
           <input
             onKeyDown={onEnterKey}
@@ -55,8 +51,10 @@ export default function UserForm({
           {errors.email && <p className="text-rose-400 text-xs mt-1">{errors.email}</p>}
         </div>
 
+        {/* phone number input  */}
         <div className="flex-1">
           <input
+            type="number"
             onKeyDown={onEnterKey}
             placeholder="Phone number"
             value={phone}
@@ -66,6 +64,7 @@ export default function UserForm({
           {errors.phone && <p className="text-rose-400 text-xs mt-1">{errors.phone}</p>}
         </div>
 
+        {/* website  */}
         <div className="flex-1">
           <input
             onKeyDown={onEnterKey}
@@ -76,6 +75,7 @@ export default function UserForm({
           />
         </div>
 
+        {/* city  */}
         <div className="flex-1">
           <input
             onKeyDown={onEnterKey}
@@ -85,6 +85,34 @@ export default function UserForm({
             className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition"
           />
         </div>
+
+        {/* gender  */}
+        <select
+          value={gender} onChange={(e) => setGender(e.target.value)}
+          className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition">
+          <option value="">Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+
+        {/* age  */}
+        <div>
+          <input 
+            type="number"
+            onKeyDown={onEnterKey}
+            placeholder="age"
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
+            className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition"
+          />
+        </div>
+
+        {/* country  */}
+        <input
+          placeholder="country"
+          value={country} onChange={(e) => setCountry(e.target.value)}
+          className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition" />
       </div>
 
       {/* বাটন সেকশন */}
@@ -98,7 +126,7 @@ export default function UserForm({
               Save Changes
             </button>
             <button
-              onClick={handleCancel}
+              onClick={clearForm}
               className="px-4 bg-slate-700 hover:bg-slate-600 text-slate-300 text-sm font-medium py-2.5 rounded-xl transition"
             >
               Cancel
@@ -107,7 +135,7 @@ export default function UserForm({
         ) : (
           <button
             onClick={addUser}
-            className="flex-1 bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold py-2.5 rounded-xl transition disabled:opacity-40"
+            className="flex-1 bg-violet-600 hover:bg-violet-500 cursor-pointer text-white text-sm font-semibold py-2.5 rounded-xl transition disabled:opacity-40"
             disabled={!name || !email}
           >
             Add User

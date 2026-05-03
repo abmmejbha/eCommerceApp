@@ -146,6 +146,7 @@ export default function App() {
           editUser={editUser} setEditUser={setEditUser}
           addUser={addUser} updateUser={updateUser}
           errors={errors}
+          clearForm = {clearForm}
         />
         <UserList
           filtered={filtered}

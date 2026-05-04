@@ -6,7 +6,7 @@ export default function SearchBar({ search, setSearch }) {
       </svg>
       <input
         type="text"
-        placeholder="Search users by name..."
+        placeholder="Search by name, email, city, country..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         className="w-full bg-slate-900 border border-slate-700 rounded-xl pl-10 pr-4 py-3 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition"

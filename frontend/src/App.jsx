@@ -169,9 +169,26 @@ export default function App() {
 
   // filtering using useMemo
   const filtered = useMemo(() => {
-    return users.filter((user) => 
-      user.name.toLowerCase().includes(search.toLowerCase())
-    );
+    const query = search.toLowerCase().trim()
+
+    if (!query) return users
+
+    return users.filter((user) => {
+      const fields = [
+        user.name,
+        user.email,
+        user.phone,
+        user.city,
+        user.country,
+        user.gender,
+        user.website,
+        user.age?.toString(),
+      ]
+
+      return fields.some((field) =>
+        field?.toString().toLowerCase().includes(query)
+      )
+    })
   },[users, search])
 
   

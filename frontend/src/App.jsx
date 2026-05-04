@@ -57,9 +57,29 @@ export default function App() {
 
   const validate = () => {
     const newErrors = {}
-    if (!name) newErrors.name = 'Name is required'
+    
+    // Name validation
+    if (!name.trim()) newErrors.name = 'Name is required'
+    else if (name.trim().length < 2) newErrors.name = 'Name must be at least 2 characters'
+    
+    // Email validation
     if (!email) newErrors.email = 'Email is required'
-    else if (!email.includes('@')) newErrors.email = 'Valid email is required'
+    else if (!email.includes('@') || !email.includes('.')) newErrors.email = 'Valid email is required (e.g., user@domain.com)'
+    
+    // Age validation
+    if (age) {
+      const ageNum = parseInt(age)
+      if (isNaN(ageNum)) newErrors.age = 'Age must be a number'
+      else if (ageNum < 1) newErrors.age = 'Age must be at least 1'
+      else if (ageNum > 120) newErrors.age = 'Age cannot exceed 120'
+    }
+    
+    // Phone validation (if provided)
+    if (phone && phone.trim()) {
+      const phoneRegex = /^[+]?[(]?[0-9]{1,4}[)]?[-\s]?[0-9]{1,4}[-\s]?[0-9]{1,9}$/
+      if (!phoneRegex.test(phone)) newErrors.phone = 'Invalid phone format'
+    }
+    
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
@@ -82,11 +102,30 @@ export default function App() {
       fetchUsers()
     } catch (err) {
       console.error('Add user failed:', err)
-      showToast('Failed to add user.', 'error')
+      const errorMsg = err.response?.data?.message || 'Failed to add user'
+      const errorDetails = err.response?.data?.errors
+      
+      if (err.response?.data?.error === 'DUPLICATE_EMAIL') {
+        showToast('This email already exists!', 'error')
+      } else if (errorDetails && Array.isArray(errorDetails)) {
+        showToast(errorDetails[0], 'error')
+      } else {
+        showToast(errorMsg, 'error')
+      }
     }
   }
 
-  const updateUser = async () => {
+  co  const errorMsg = err.response?.data?.message || 'Failed to update user'
+      const errorDetails = err.response?.data?.errors
+      
+      if (err.response?.data?.error === 'DUPLICATE_EMAIL') {
+        showToast('This email already exists!', 'error')
+      } else if (errorDetails && Array.isArray(errorDetails)) {
+        showToast(errorDetails[0], 'error')
+      } else {
+        showToast(errorMsg, 'error')
+      }
+    nst updateUser = async () => {
     if (!editUser || !validate()) return
     try {
       await axios.put(`${API}/users/${editUser._id}`, { name, email, phone, age, city, country, gender, website })

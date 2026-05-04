@@ -8,7 +8,6 @@ app.use(express.json());
 app.use(cors());
 
 // MongoDB Connect
-// mongoose.connect('mongodb://localhost:27017/userdb')
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB Connected ✅'))
   .catch((err) => console.log('Error:', err));
@@ -52,72 +51,75 @@ const User = mongoose.model('User', userSchema);
 
 // ─── ROUTES ───────────────────────────────
 
-// GET — সব user
+// GET — সব user দেখা
 app.get('/users', async (req, res) => {
-  const users = await User.find({});
-  res.json(users);
-});
-
-// POST — নতুน user
-app.post('/users', async (req, res) => {
-  try{
-    const {name, email, phone, website, city, age, country, gender} = req.body
-    
-    // Check if email already exists
-    const existingUser = await User.findOne({ email: email.toLowerCase() })
-    if (existingUser) {
-      return res.status(400).json({message: "Email already exists", error: "DUPLICATE_EMAIL"})
-    }
-    
-    const user = new User({name, email, phone, website, city, age, country, gender})
-    await user.save()
-    res.status(201).json({message: 'User created successfully', user})
+  try {
+    const users = await User.find({});
+    res.json(users);
   } catch (err) {
-    const {email} = req.body
-    
-    // Check if new email already exists (and it's different from current)
-    if (email) {
-      const existingUser = await User.findOne({ 
-        email: email.toLowerCase(),
-        _id: { $ne: req.params.id }
-      })
-      if (existingUser) {
-        return res.status(400).json({message: "Email already exists", error: "DUPLICATE_EMAIL"})
-      }
-    }
-    
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true})
-    res.json({message: "User updated successfully", user: updatedUser})
+    res.status(500).json({ message: "Error fetching users", error: err.message });
   }
-  catch(err) {
-    if (err.name === 'ValidationError') {
-      const messages = Object.values(err.errors).map(e => e.message)
-      return res.status(400).json({message: "Validation failed", errors: messages})
-    }
-    res.status(500).json({message: "Error updating user", error: err.message})
 });
 
+// POST — নতুন user তৈরি
+app.post('/users', async (req, res) => {
+  try {
+    const user = new User(req.body);
+    await user.save();
+    res.status(201).json({ message: 'User created successfully', user });
+  } catch (err) {
+    if (err.code === 11000) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
+    if (err.name === 'ValidationError') {
+      const messages = Object.values(err.errors).map(e => e.message);
+      return res.status(400).json({ message: "Validation failed", errors: messages });
+    }
+    res.status(500).json({ message: "Error creating user", error: err.message });
+  }
+});
 
+// PUT — user আপডেট
 app.put('/users/:id', async (req, res) => {
   try {
-    // ১. id এবং ২. নতুন ডেটা (req.body) পাঠাতে হবে
-    // { new: true } দিলে আপডেট হওয়ার পর নতুন ডেটাটি রিটার্ন করে
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {new: true})
-    res.json({message: "User Updated! ", user: updatedUser})
-  }
-  catch(err) {
-    res.status(500).json({message: "Error Updating user", error: err})
-  }
-})
+    const { email } = req.body;
 
-// DELETE — user মুছো
-app.delete('/users/:id', async (req, res) => {
-  await User.findByIdAndDelete(req.params.id);
-  res.json({ message: 'User deleted!' });
+    // ইমেইল আপডেট করতে চাইলে চেক করা যে ওই ইমেইল অন্য কেউ ব্যবহার করছে কি না
+    if (email) {
+      const existingUser = await User.findOne({ email: email.toLowerCase(), _id: { $ne: req.params.id } });
+      if (existingUser) {
+        return res.status(400).json({ message: "Email is already taken by another user" });
+      }
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id, 
+      req.body, 
+      { new: true, runValidators: true } // Validation চালু রাখা হয়েছে
+    );
+
+    if (!updatedUser) return res.status(404).json({ message: "User not found" });
+    
+    res.json({ message: "User updated successfully", user: updatedUser });
+  } catch (err) {
+    if (err.name === 'ValidationError') {
+      const messages = Object.values(err.errors).map(e => e.message);
+      return res.status(400).json({ message: "Validation failed", errors: messages });
+    }
+    res.status(500).json({ message: "Error updating user", error: err.message });
+  }
 });
 
-
-// ──────────────────────────────────────────
+// DELETE — user মোছা
+app.delete('/users/:id', async (req, res) => {
+  try {
+    const deletedUser = await User.findByIdAndDelete(req.params.id);
+    if (!deletedUser) return res.status(404).json({ message: "User not found" });
+    res.json({ message: 'User deleted!' });
+  } catch (err) {
+    res.status(500).json({ message: "Error deleting user", error: err.message });
+  }
+});
 
 app.listen(3000, () => {
   console.log('Server running on port 3000 🚀');

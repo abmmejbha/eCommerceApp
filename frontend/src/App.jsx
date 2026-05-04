@@ -89,6 +89,7 @@ export default function App() {
     setCity('');
     setCountry('');
     setGender('');
+    setWebsite('');
     setEditUser(null);
     setErrors({});
   }
@@ -115,7 +116,16 @@ export default function App() {
     }
   }
 
-  co  const errorMsg = err.response?.data?.message || 'Failed to update user'
+  const updateUser = async () => {
+    if (!editUser || !validate()) return
+    try {
+      await axios.put(`${API}/users/${editUser._id}`, { name, email, phone, age, city, country, gender, website })
+      clearForm()
+      showToast('User updated successfully!')
+      fetchUsers()
+    } catch (err) {
+      console.error('Update failed:', err)
+      const errorMsg = err.response?.data?.message || 'Failed to update user'
       const errorDetails = err.response?.data?.errors
       
       if (err.response?.data?.error === 'DUPLICATE_EMAIL') {
@@ -125,15 +135,6 @@ export default function App() {
       } else {
         showToast(errorMsg, 'error')
       }
-    nst updateUser = async () => {
-    if (!editUser || !validate()) return
-    try {
-      await axios.put(`${API}/users/${editUser._id}`, { name, email, phone, age, city, country, gender, website })
-      clearForm()
-      showToast('User updated successfully!')
-      fetchUsers()
-    } catch (err) {
-      console.error('Update failed:', err)
     }
   }
 

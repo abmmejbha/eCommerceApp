@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
-  name: {
+  username: {
     type: String,
-    required: [true, 'Name is required'],
+    required: [true, 'Username is required'],
     trim: true,
-    minlength: [2, 'Name must be at least 2 characters']
+    minlength: [2, 'Username must be at least 2 characters']
   },
   email: {
     type: String,
@@ -14,25 +14,19 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please provide a valid email']
   },
-  phone: {
+  password: {
     type: String,
-    match: [/^[+]?[(]?[0-9]{1,4}[)]?[-\s]?[0-9]{1,4}[-\s]?[0-9]{1,9}$/, 'Invalid phone format'],
-    sparse: true
+    required: [true, 'Password is required'],
+    minlength: [6, 'Password must be at least 6 characters']
   },
-  website: String,
-  city: String,
-  age: {
-    type: Number,
-    min: [1, 'Age must be at least 1'],
-    max: [120, 'Age cannot exceed 120']
-  },
-  country: String,
-  gender: String,
-  createdAt: {
-    type: Date,
-    default: Date.now
+  isAdmin: {
+    type: Boolean,
+    default: false,
+    required: true
   }
-});
+},
+  { timestamps: true }
+);
 
 const User = mongoose.model('User', userSchema);
 

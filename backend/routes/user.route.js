@@ -2,7 +2,8 @@ import express from 'express';
 import { getUsers, createUser, updateUser, deleteUser } from '../controllers/user.controller.js';
 import { getUserProfile, updateUserProfile } from '../controllers/profile.controller.js';
 import { authenticate, authorizeAdmin } from '../middleware/authMiddleware.js';
-import { registerUser, loginUser } from '../controllers/auth.controller.js';
+import { registerUser, loginUser, logoutUser } from '../controllers/user.controller.js';
+import { getUserProfile, updateUserProfile } from '../controllers/profile.controller.js';
 
 
 const router = express.Router();
@@ -13,6 +14,7 @@ router.put('/users/:id', updateUser);
 router.delete('/users/:id', deleteUser);
 router.post('register', registerUser);
 router.post('/auth', loginUser);
+router.post("/logout", logoutUser);
 
 router.route("/profile")
     .get(authenticate, getUserProfile)

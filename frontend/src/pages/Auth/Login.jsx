@@ -15,10 +15,10 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await login({ email, password }).unwrap();
-      dispatch(setCredentials({ ...res }));
+      dispatch(setCredentials({ res }));
       navigate("/");
     } catch (err) {
-      console.log(err?.data?.message || err.error);
+      alert(err?.data?.message || err.error);
     }
   };
 
@@ -35,7 +35,7 @@ const Login = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <button type="submit" disabled={isLoading}>
-        Login
+        {isLoading ? "Loading..." : "Login"}
       </button>
     </form>
   );

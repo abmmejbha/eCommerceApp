@@ -13,6 +13,9 @@ import Shop from "./pages/Shop";
 import Product from "./pages/Products/Product";
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import Login from "./pages/Auth/Login";
+import PrivateRoute from "./components/PrivateRoute";
+import Profile from "./pages/User/Profile";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,6 +23,10 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="shop" element={<Shop />} />
       <Route path="product/:id" element={<Product />} />
+      <Route path="login" element={<Login />} />
+      <Route path="" element={<PrivateRoute />}>
+        <Route path="profile" element={<Profile />} />
+      </Route>
     </Route>,
   ),
 );
@@ -27,5 +34,5 @@ const router = createBrowserRouter(
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <RouterProvider router={router} />
-  </Provider>
+  </Provider>,
 );

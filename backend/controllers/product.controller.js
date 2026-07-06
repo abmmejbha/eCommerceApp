@@ -31,10 +31,8 @@ export const fetchProducts = asyncHandler(async (req, res) => {
     const keyword = req.query.keyword 
         ? { name: { $regex: req.query.keyword, $options: "i"}}
         : {}
-
     const count = await Product.countDocuments({...keyword})
     const products = await Product.find({...keyword}).limit(pageSize)
-
     res.json({products, page: 1, pages: Math.ceil(count / pageSize)})
 })
 
@@ -55,4 +53,10 @@ export const removeProduct = asyncHandler(async(req, res) => {
         throw new Error('Product not found')
     }
     res.json({message: 'Product removed'})
+})
+
+
+export const fetchTopProducts = asyncHandler(async (req, res) => {
+    const products = await Product.find({}).sort({rating: -1}).limit(4)
+    res.json(products)
 })

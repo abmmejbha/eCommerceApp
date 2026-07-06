@@ -1,4 +1,4 @@
-# userManagementApp
+# User management E-commerce app
 
 
 project is live at this link: 

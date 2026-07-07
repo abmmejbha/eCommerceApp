@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useLoginUserMutation } from "../../redux/api/authApiSlice";
+import { useLoginUserMutation } from "../../redux\features\auth\authSlice";
 import { setCredentials } from "../../redux/features/auth/authSlice";
+
 
 const Login = () => {
   const [email, setEmail] = useState("");

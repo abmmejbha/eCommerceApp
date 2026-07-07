@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useLoginUserMutation } from "../../redux\features\auth\authSlice";
-import { setCredentials } from "../../redux/features/auth/authSlice";
+import { useLoginMutation } from "../../redux/api/usersApiSlice";
+import { setCredentials } from '../../redux/features/auth/authSlice';
 
 
 const Login = () => {
@@ -10,13 +10,13 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [login, { isLoading }] = useLoginUserMutation();
+  const [login, { isLoading }] = useLoginMutation();
 
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
       const res = await login({ email, password }).unwrap();
-      dispatch(setCredentials({ res }));
+      dispatch(setCredentials( res ));
       navigate("/");
     } catch (err) {
       alert(err?.data?.message || err.error);

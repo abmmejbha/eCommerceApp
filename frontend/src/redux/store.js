@@ -3,7 +3,7 @@ import { apiSlice } from './api/apiSlice';
 import authReducer from './features/auth/authSlice';
 import favoritesReducer from "./features/favorites/favoriteSlice";
 
-export const store = configureStore({
+const store = configureStore({
     reducer: {
         [apiSlice.reducerPath]: apiSlice.reducer,
         auth: authReducer,
@@ -12,3 +12,4 @@ export const store = configureStore({
     middleware:(getDefault) => getDefault().concat(apiSlice.middleware),
 })
 
+export default store;

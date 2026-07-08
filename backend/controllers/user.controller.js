@@ -6,6 +6,9 @@ import generateToken from "../utils/generateToken.js";
 
 // REGISTER USER
 const registerUser = asyncHandler(async (req, res) => {
+  
+  console.log("Frontend response received:", req.body); // Log the request body to see what is being sent
+
   const { username, email, password } = req.body;
 
   const userExists = await User.findOne({ email });
@@ -32,6 +35,7 @@ const registerUser = asyncHandler(async (req, res) => {
       isAdmin: newUser.isAdmin,
     });
   } catch (error) {
+    console.log("Error saving user:", error); // Log the error to see what went wrong
     res.status(400);
     throw new Error("Invalid user data");
   }

@@ -9,6 +9,7 @@ import { authenticate, authorizeAdmin } from './middleware/authMiddleware.js';
 import productRoutes from "./routes/product.route.js";
 import categoryRoutes from "./routes/category.route.js";
 import userRoutes from "./routes/user.route.js";
+import orderRoutes from './routes/order.route.js'
 
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
@@ -27,6 +28,7 @@ app.use(cookieParser());
 app.use(userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/category', categoryRoutes);
+app.use('/api/orders', orderRoutes)
 
 app.use(notFound);
 app.use(errorHandler);

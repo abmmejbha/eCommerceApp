@@ -17,6 +17,8 @@ import store from "./redux/store";
 import Login from "./pages/Auth/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./pages/User/Profile";
+import Shipping from "./pages/Orders/Shipping";
+import PlaceOrder from "./pages/Orders/PlaceOrder";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,8 +27,12 @@ const router = createBrowserRouter(
       <Route path="shop" element={<Shop />} />
       <Route path="product/:id" element={<Product />} />
       <Route path="login" element={<Login />} />
+      
       <Route path="" element={<PrivateRoute />}>
         <Route path="profile" element={<Profile />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="shipping" element={<Shipping />} />
+        <Route path="placeorder" element={<PlaceOrder />} />
       </Route>
     </Route>,
   ),

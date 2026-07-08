@@ -25,7 +25,7 @@ app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
 
-app.use(userRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/category', categoryRoutes);
 app.use('/api/orders', orderRoutes)

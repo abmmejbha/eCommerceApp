@@ -1,11 +1,12 @@
-import Order from "../models/orderModel.js";
-import Product from "../models/productModel.js";
+import Order from "../models/order.model.js";
+import Product from "../models/product.model.js";
 import { calcPrices } from "../utils/calcPrices.js";
 
 function calcPrice(orderItem) {
   const itemsPrice = orderItems.reduce(acc);
 }
 
+// 1. createOrder 
 const createOrder = async (req, res) => {
   try {
     const { orderItems, shippingAddress, paymentMethod } = req.body;
@@ -37,32 +38,6 @@ const createOrder = async (req, res) => {
       };
     });
 
-    const findOrderById = async (req, res) => {
-      try {
-        const order = await Order.findById(req.params.id).populate(
-          "user",
-          "username email",
-        );
-
-        if (order) {
-          res.json(order);
-        } else {
-          res.status(404).json({ error: "Order পাওয়া যায়নি" });
-        }
-      } catch (error) {
-        res.status(500).json({ error: error.message });
-      }
-    };
-
-    const getUserOrders = async (req, res) => {
-      try {
-        const orders = await Order.find({ user: req.user._id });
-        res.json(orders);
-      } catch (error) {
-        res.status(500).json({ error: error.message });
-      }
-    };
-
     // Step 3: Calculate itemsPrice/tax/shipping/total with this correct price
     const { itemsPrice, taxPrice, shippingPrice, totalPrice } =
       calcPrices(dbOrderItems);
@@ -80,6 +55,34 @@ const createOrder = async (req, res) => {
 
     const createdOrder = await order.save();
     res.status(201).json(createdOrder);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}; // <-- createOrder function end
+
+// 2. findOrderById 
+const findOrderById = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id).populate(
+      "user",
+      "username email",
+    );
+
+    if (order) {
+      res.json(order);
+    } else {
+      res.status(404).json({ error: "Order পাওয়া যায়নি" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// 3 getUserOrders 
+const getUserOrders = async (req, res) => {
+  try {
+    const orders = await Order.find({ user: req.user._id });
+    res.json(orders);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

@@ -1,5 +1,5 @@
 import User from "../models/user.model.js";
-import asyncHandler from "../middleware/asyncHandler.js";
+import asyncHandler from "../middlewares/asyncHandler.js";
 import bcrypt from "bcryptjs";
 
 const getUserProfile = asyncHandler(async (req, res) => {

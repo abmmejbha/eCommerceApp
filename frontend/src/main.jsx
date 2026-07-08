@@ -32,7 +32,6 @@ const router = createBrowserRouter(
       
       <Route path="" element={<PrivateRoute />}>
         <Route path="profile" element={<Profile />} />
-        <Route path="profile" element={<Profile />} />
         <Route path="shipping" element={<Shipping />} />
         <Route path="placeorder" element={<PlaceOrder />} />
       </Route>

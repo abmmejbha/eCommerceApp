@@ -1,4 +1,3 @@
-// frontend/src/pages/Shop.jsx (মূল অংশ)
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetFilteredProductsQuery } from "../redux/api/productApiSlice";
@@ -23,13 +22,13 @@ const Shop = () => {
     if (!categoriesQuery.isLoading) {
       dispatch(setCategories(categoriesQuery.data));
     }
-  }, [categoriesQuery.data, dispatch]);
+  }, [categoriesQuery.data, categoriesQuery.isLoading, dispatch]);
 
   useEffect(() => {
     if (!filteredProductsQuery.isLoading) {
       dispatch(setProducts(filteredProductsQuery.data));
     }
-  }, [filteredProductsQuery.data, dispatch]);
+  }, [filteredProductsQuery.data, filteredProductsQuery.isLoading, dispatch]);
 
   const handleCheck = (checkedValue, categoryId) => {
     const updatedChecked = checkedValue

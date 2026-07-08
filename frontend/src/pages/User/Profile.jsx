@@ -16,9 +16,9 @@ const Profile = () => {
     try {
       const res = await updateProfile({ username, email }).unwrap();
       dispatch(setCredentials(res));
-      alert("Profile update হয়েছে");
+      alert("Profile updated successfully!");
     } catch (err) {
-      alert(err?.data?.error || "সমস্যা হয়েছে");
+      alert(err?.data?.error || "Profile update error !");
     }
   };
 

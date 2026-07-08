@@ -5,13 +5,13 @@ export const addFavoriteToLocalStorage = (product) => {
     favorites.push(product);
     localStorage.setItem("favorites", JSON.stringify(favorites));
   }
-}
+};
 
 // Remove  product from a localStorage
 export const removeFavoriteFromLocalStorage = (productId) => {
   const favorites = getFavoritesFromLocalStorage();
   const updateFavorites = favorites.filter(
-    (product) => product._id !== productId
+    (product) => product._id !== productId,
   );
 
   localStorage.setItem("favorites", JSON.stringify(updateFavorites));

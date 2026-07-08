@@ -88,6 +88,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
         body: { checked, radio },
       }),
     }),
+
   }),
 });
 

@@ -1,11 +1,15 @@
+// Packages
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import dns from 'dns';
-import { notFound, errorHandler } from './middlewares/errorMiddleware.js';
+import path from 'path';
 import cookieParser from 'cookie-parser';
+// Middlewares
+import { notFound, errorHandler } from './middlewares/errorMiddleware.js';
 import { authenticate, authorizeAdmin } from './middlewares/authMiddleware.js';
+// Routes
 import productRoutes from "./routes/product.route.js";
 import categoryRoutes from "./routes/category.route.js";
 import userRoutes from "./routes/user.route.js";
@@ -36,7 +40,9 @@ app.use('/api/orders', orderRoutes)
 app.use(notFound);
 app.use(errorHandler);
 
-
+app.get("/api/config/paypal", (req, res) => {
+  res.send({ clientId: process.env.PAYPAL_CLIENT_ID });
+});
 
 
 const PORT = process.env.PORT || 3000;

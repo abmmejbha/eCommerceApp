@@ -6,7 +6,7 @@ const ProductCarousel = () => {
   const [index, setIndex] = useState(0);
 
   if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>সমস্যা হয়েছে</p>;
+  if (error) return <p>Error occurred while fetching products.</p>;
 
   const currentProduct = products[index];
 

@@ -20,6 +20,11 @@ import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./pages/User/Profile";
 import Shipping from "./pages/Orders/Shipping";
 import PlaceOrder from "./pages/Orders/PlaceOrder";
+import AdminRoute from "./pages/Admin/AdminRoute";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
+import CategoryList from "./pages/Admin/CategoryList";
+import OrderList from "./pages/Admin/OrderList";
+import UserList from "./pages/Admin/UserList";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,11 +34,19 @@ const router = createBrowserRouter(
       <Route path="product/:id" element={<Product />} />
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
-      
+
       <Route path="" element={<PrivateRoute />}>
         <Route path="profile" element={<Profile />} />
         <Route path="shipping" element={<Shipping />} />
         <Route path="placeorder" element={<PlaceOrder />} />
+      </Route>
+      
+      <Route path="/admin" element={<AdminRoute />}>
+        <Route path="dashboard" element={<AdminDashboard />} />
+        <Route path="productlist" element={<AdminRoute />} />
+        <Route path="categorylist" element={<CategoryList />} />
+        <Route path="orderlist" element={<OrderList />} />
+        <Route path="userlist" element={<UserList />} />
       </Route>
     </Route>,
   ),

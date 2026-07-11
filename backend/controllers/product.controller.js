@@ -71,3 +71,4 @@ export const filterProducts = asyncHandler(async (req, res) => {
     const products = await Product.find(args)
     res.json(products)
 })
+

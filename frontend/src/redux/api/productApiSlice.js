@@ -45,6 +45,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
         method: "PUT",
         body: formData,
       }),
+      invalidatesTags: ["Product"],
     }),
 
     uploadProductImage: builder.mutation({

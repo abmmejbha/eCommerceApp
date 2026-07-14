@@ -14,13 +14,13 @@ import productRoutes from "./routes/product.route.js";
 import categoryRoutes from "./routes/category.route.js";
 import userRoutes from "./routes/user.route.js";
 import orderRoutes from './routes/order.route.js'
+import uploadRoutes from './routes/upload.route.js';
 
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
 dotenv.config();
 
 const app = express();
-
 connectDB();
 
 app.use(cors({
@@ -39,6 +39,10 @@ app.use('/api/orders', orderRoutes)
 
 app.use(notFound);
 app.use(errorHandler);
+
+app.use('/api/upload', uploadRoutes);
+const __dirname = path.resolve();
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 app.get("/api/config/paypal", (req, res) => {
   res.send({ clientId: process.env.PAYPAL_CLIENT_ID });

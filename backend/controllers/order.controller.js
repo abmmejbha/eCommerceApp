@@ -88,4 +88,15 @@ const getUserOrders = async (req, res) => {
   }
 };
 
-export { createOrder, findOrderById, getUserOrders };
+// 4. getOrders (admin - all orders)
+const getOrders = async (req, res) => {
+  try {
+    const orders = await Order.find({}).populate("user", "id username");
+    res.json(orders);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+export { createOrder, findOrderById, getUserOrders, getOrders };

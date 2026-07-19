@@ -29,7 +29,7 @@ export const updateCategory = asyncHandler(async(req, res) => {
     }   
     const category = await Category.findByIdAndUpdate(req.params.id, { name }, { new: true });
     if (!category) {
-        return res.status(404).json({ error: error.message || "Category not found" });
+        return res.status(404).json({ error: "Category not found" });
     }
 
     res.json(category);

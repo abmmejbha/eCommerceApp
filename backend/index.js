@@ -23,8 +23,17 @@ dotenv.config();
 const app = express();
 connectDB();
 
+const allowedOrigins = [
+  process.env.CLIENT_URL || "https://ecommerce-app-mejbha.vercel.app",
+  "http://localhost:5173",
+];
 app.use(cors({
-  origin: "https://ecommerce-app-mejbha.vercel.app",
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error("Not allowed by CORS"));
+  },
   credentials: true,
 }));
 

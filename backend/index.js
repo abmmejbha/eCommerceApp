@@ -47,16 +47,12 @@ app.use('/api/category', categoryRoutes);
 app.use('/api/orders', orderRoutes)
 app.use('/api/upload', uploadRoutes);
 
-app.use(notFound);
-app.use(errorHandler);
 
 const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
-app.get("/api/config/paypal", (req, res) => {
-  res.send({ clientId: process.env.PAYPAL_CLIENT_ID });
-});
-
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

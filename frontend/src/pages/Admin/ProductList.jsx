@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useCreateProductMutation } from "../../redux/api/productApiSlice";
-import { BASE_URL } from "../../utils/constants";
+import { BASE_URL } from "../../redux/constants";
 
 const ProductList = () => {
   const [imageUrl, setImageUrl] = useState("");

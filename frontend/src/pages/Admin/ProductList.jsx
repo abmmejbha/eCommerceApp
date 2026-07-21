@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useCreateProductMutation } from "../../redux/api/productApiSlice";
+import { BASE_URL } from "../../utils/constants";
 
 const ProductList = () => {
   const [imageUrl, setImageUrl] = useState("");
@@ -21,16 +22,12 @@ const ProductList = () => {
     formData.append("image", file);
 
     try {
-      const res = await axios.post(
-        "http://localhost:5000/api/upload",
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        },
-      );
+      const res = await axios.post(`${BASE_URL}/api/upload`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
       setImageUrl(res.data.image);
     } catch (error) {
-      console.error(error); 
+      console.error(error);
       alert("Image upload failed");
     }
   };

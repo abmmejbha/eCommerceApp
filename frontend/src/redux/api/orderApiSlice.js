@@ -24,6 +24,11 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       query: () => ORDER_URL,
       providesTags: ["Order"],
     }),
+
+    getTotalSales: builder.query({
+      query: () => `${ORDER_URL}/total-sales-by-date`,
+      providesTags: ["Order"],
+    })
   }),
 });
 
@@ -32,4 +37,5 @@ export const {
   useGetOrderDetailsQuery,
   useGetMyOrdersQuery,
   useGetOrdersQuery,
+  useGetTotalSalesQuery,
 } = orderApiSlice;

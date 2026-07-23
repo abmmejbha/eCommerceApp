@@ -12,7 +12,7 @@ export const categoryApiSlice = apiSlice.injectEndpoints({
             query: ( newCategory) => ({
                 url: CATEGORY_URL,
                 method: "POST",
-                body: newCateogry,
+                body: newCategory,
             }),
             invalidatesTags: ["Category"],
         }),

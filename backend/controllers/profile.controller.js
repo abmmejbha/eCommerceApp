@@ -7,13 +7,13 @@ const getUserProfile = asyncHandler(async (req, res) => {
   if (user) {
     res.json({ _id: user._id, username: user.username, email: user.email });
   } else {
-    res.status(404).json({ error: "User পাওয়া যায়নি" });
+    res.status(404).json({ error: "User not found" });
   }
 });
 
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
-  if (!user) return res.status(404).json({ error: "User পাওয়া যায়নি" });
+  if (!user) return res.status(404).json({ error: "User not found" });
 
   user.username = req.body.username || user.username;
   user.email = req.body.email || user.email;

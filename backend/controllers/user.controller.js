@@ -70,7 +70,7 @@ const loginUser = asyncHandler(async (req, res) => {
 // LOGOUT USER
 const logoutUser = async (req, res) => {
   res.cookie("jwt", "", { httpOnly: true, expires: new Date(0) });
-  res.status(200).json({ message: "Logout হয়েছে" });
+  res.status(200).json({ message: "Logout successful" });
 };
 
 // GET ALL USERS

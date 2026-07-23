@@ -38,5 +38,4 @@ router
   .put(authenticate, authorizeAdmin, updateUser) // PUT /api/users/:id
   .delete(authenticate, authorizeAdmin, deleteUser); // DELETE /api/users/:id
 
-
 export default router;

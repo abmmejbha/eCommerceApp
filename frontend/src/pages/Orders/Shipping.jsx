@@ -9,7 +9,9 @@ const Shipping = () => {
 
   const [address, setAddress] = useState(shippingAddress.address || "");
   const [city, setCity] = useState(shippingAddress.city || "");
-  const [postalCode, setPostalCode] = useState(shippingAddress.postalCode || "");
+  const [postalCode, setPostalCode] = useState(
+    shippingAddress.postalCode || "",
+  );
   const [country, setCountry] = useState(shippingAddress.country || "");
 
   const dispatch = useDispatch();
@@ -23,10 +25,26 @@ const Shipping = () => {
 
   return (
     <form onSubmit={submitHandler}>
-      <input placeholder="Address" value={address} onChange={(e) => setAddress(e.target.value)} />
-      <input placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
-      <input placeholder="Postal Code" value={postalCode} onChange={(e) => setPostalCode(e.target.value)} />
-      <input placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} />
+      <input
+        placeholder="Address"
+        value={address}
+        onChange={(e) => setAddress(e.target.value)}
+      />
+      <input
+        placeholder="City"
+        value={city}
+        onChange={(e) => setCity(e.target.value)}
+      />
+      <input
+        placeholder="Postal Code"
+        value={postalCode}
+        onChange={(e) => setPostalCode(e.target.value)}
+      />
+      <input
+        placeholder="Country"
+        value={country}
+        onChange={(e) => setCountry(e.target.value)}
+      />
       <button type="submit">Continue</button>
     </form>
   );

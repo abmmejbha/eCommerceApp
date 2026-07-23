@@ -11,12 +11,18 @@ const Order = () => {
   return (
     <div>
       <h2>Order #{order._id}</h2>
-      <p>Address: {order.shippingAddress.address}, {order.shippingAddress.city}</p>
+      <p>
+        Address: {order.shippingAddress.address}, {order.shippingAddress.city}
+      </p>
       <p>Payment: {order.isPaid ? "Paid ✅" : "Pending ❌"}</p>
-      <p>Delivery: {order.isDelivered ? "Delivered ✅" : "Not Delivered Yet ❌"}</p>
+      <p>
+        Delivery: {order.isDelivered ? "Delivered ✅" : "Not Delivered Yet ❌"}
+      </p>
 
       {order.orderItems.map((item) => (
-        <p key={item._id}>{item.name} × {item.qty} = {(item.qty * item.price).toFixed(2)}৳</p>
+        <p key={item._id}>
+          {item.name} × {item.qty} = {(item.qty * item.price).toFixed(2)}৳
+        </p>
       ))}
 
       <h3>Total: {order.totalPrice}৳</h3>

@@ -13,6 +13,8 @@ export const filterUsers = (users, search) => {
       user.website,
       user.age?.toString(),
     ];
-    return fields.some((field) => field?.toString().toLowerCase().includes(query));
+    return fields.some((field) =>
+      field?.toString().toLowerCase().includes(query),
+    );
   });
 };

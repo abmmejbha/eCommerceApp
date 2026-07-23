@@ -3,10 +3,8 @@ import asyncHandler from "../middlewares/asyncHandler.js";
 import bcrypt from "bcryptjs";
 import generateToken from "../utils/generateToken.js";
 
-
 // REGISTER USER
 const registerUser = asyncHandler(async (req, res) => {
-  
   console.log("Frontend response received:", req.body); // Log the request body to see what is being sent
 
   const { username, email, password } = req.body;
@@ -77,7 +75,7 @@ const logoutUser = async (req, res) => {
 const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find({});
   res.json(users);
-})
+});
 
 // CREATE USER
 const createUser = asyncHandler(async (req, res) => {
@@ -123,7 +121,8 @@ const updateUser = asyncHandler(async (req, res) => {
 
   user.username = req.body.username || user.username;
   user.email = req.body.email || user.email;
-  user.isAdmin = req.body.isAdmin !== undefined ? req.body.isAdmin : user.isAdmin;
+  user.isAdmin =
+    req.body.isAdmin !== undefined ? req.body.isAdmin : user.isAdmin;
 
   try {
     await user.save();
@@ -151,4 +150,12 @@ const deleteUser = asyncHandler(async (req, res) => {
   }
 });
 
-export { registerUser, loginUser, logoutUser, getUsers, createUser, updateUser, deleteUser };
+export {
+  registerUser,
+  loginUser,
+  logoutUser,
+  getUsers,
+  createUser,
+  updateUser,
+  deleteUser,
+};

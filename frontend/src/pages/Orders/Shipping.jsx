@@ -9,6 +9,7 @@ const Shipping = () => {
 
   const [address, setAddress] = useState(shippingAddress.address || "");
   const [city, setCity] = useState(shippingAddress.city || "");
+
   const [postalCode, setPostalCode] = useState(
     shippingAddress.postalCode || "",
   );

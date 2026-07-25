@@ -3,7 +3,12 @@ import { useGetOrdersQuery } from "../../redux/api/orderApiSlice";
 const OrderList = () => {
   const { data: orders, isLoading, error } = useGetOrdersQuery();
 
-  if (isLoading) return <p><Loading></Loading>...</p>;
+  if (isLoading)
+    return (
+      <p>
+        <Loading></Loading>...
+      </p>
+    );
   if (error) return <p>Error: {error?.data?.message || error.error}</p>;
 
   return (

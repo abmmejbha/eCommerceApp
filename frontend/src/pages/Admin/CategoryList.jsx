@@ -66,7 +66,7 @@ const CategoryList = () => {
       try {
         await updateCategory({
           categoryId: selectedCategory._id,
-          updateCategory: {name: updatingName},
+          updatedCategory: {name: updatingName},
         }).unwrap()
         setSelectedCategory(null)
       } catch(err) {

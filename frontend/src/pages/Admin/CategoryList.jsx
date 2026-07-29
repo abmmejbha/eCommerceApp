@@ -2,12 +2,16 @@ import { useState } from "react";
 import {
   useFetchCategoriesQuery,
   useCreateCategoryMutation,
+  useUpdateCategoryMutation,
+  useDeleteCategoryMutation,
 } from "../../redux/api/categoryApiSlice";
 import CategoryForm from "../../components/CategoryForm";
 
 const CategoryList = () => {
   const { data: categories, isLoading, error } = useFetchCategoriesQuery();
   const [createCategory] = useCreateCategoryMutation();
+  const [updateCategory] = useUpdateCategoryMutation();
+  const [deleteCategory] = useDeleteCategoryMutation();
   const [name, setName] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [updatingName, setUpdatingName] = useState("");
@@ -57,10 +61,25 @@ const CategoryList = () => {
     buttonText="Update"
     handleSubmit={async (e) => {
       e.preventDefault();
-      // update logic next step-
+      if (!updatingName) return;
+
+      try {
+        await updateCategory({
+          categoryId: selectedCategory._id,
+          updateCategory: {name: updatingName},
+        }).unwrap()
+        setSelectedCategory(null)
+      } catch(err) {
+        console.log(err)
+      }
     }}
     handleDelete={() => {
-      // delete logic next step-
+      try{
+        await deleteCategory(selectedCategory._id).unwrap()
+        setSelectedCategory(null)
+      } catch (err) {
+        console.log(err);
+      }
     }}
   />
 )}

@@ -49,6 +49,22 @@ const CategoryList = () => {
             </li>
         ))}
       </ul>
+
+        {selectedCategory && (
+  <CategoryForm
+    value={updatingName}
+    setValue={setUpdatingName}
+    buttonText="Update"
+    handleSubmit={async (e) => {
+      e.preventDefault();
+      // update logic next step-
+    }}
+    handleDelete={() => {
+      // delete logic next step-
+    }}
+  />
+)}
+
     </div>
   );
 };
